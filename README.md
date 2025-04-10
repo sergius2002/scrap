@@ -1,6 +1,6 @@
-# Sistema de Scraping Automatizado
+# Scrap - Sistema de Automatización de Procesos
 
-Este proyecto automatiza la extracción de datos de diferentes bancos y servicios financieros.
+Este proyecto contiene scripts de automatización para diferentes procesos de scraping y procesamiento de datos.
 
 ## Estructura del Proyecto
 
@@ -21,57 +21,95 @@ Este proyecto automatiza la extracción de datos de diferentes bancos y servicio
 
 ## Requisitos Previos
 
-- Python 3.8 o superior
+- Python 3.10 o superior
 - pip (gestor de paquetes de Python)
-- Playwright (para automatización web)
+- Git
 
 ## Instalación
 
 1. Clonar el repositorio:
 ```bash
-git clone [URL_DEL_REPOSITORIO]
-cd [NOMBRE_DEL_DIRECTORIO]
+git clone https://github.com/sergius2002/scrap.git
+cd scrap
 ```
 
 2. Crear y activar un entorno virtual:
 ```bash
-python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
+# Crear el entorno virtual
+python -m venv .venv
+
+# Activar el entorno virtual
+# En Windows:
+.venv\Scripts\activate
+# En macOS/Linux:
+source .venv/bin/activate
 ```
 
-3. Instalar dependencias:
+3. Instalar las dependencias:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Instalar los navegadores de Playwright:
+4. Configurar las variables de entorno:
+   - Copiar el archivo `.env.example` a `.env`
+   - Actualizar las variables en `.env` con tus credenciales
+
+## Estructura del Proyecto
+
+- `Scrap_bci.py`: Script para scraping de BCI
+- `Scrap_santander.py`: Script para scraping de Santander
+- `Scrap_santander_cla.py`: Script alternativo para scraping de Santander
+- `bci.py`: Módulo de procesamiento para BCI
+- `santander.py`: Módulo de procesamiento para Santander
+- `certificado/`: Directorio para archivos de certificados y credenciales
+- `archivos/`: Directorio para archivos descargados y procesados
+
+## Uso
+
+### Scrap BCI
 ```bash
-playwright install
+python Scrap_bci.py
+```
+
+### Scrap Santander
+```bash
+python Scrap_santander.py
+```
+
+### Scrap Santander CLA
+```bash
+python Scrap_santander_cla.py
 ```
 
 ## Configuración
 
-1. Copiar los certificados necesarios a la carpeta `certificado/`:
-   - `lioren-446620-e63e8a6e22d4.json`
-   - `token.json`
+El proyecto utiliza las siguientes variables de entorno (definidas en `.env`):
 
-2. Verificar que las rutas en `config.py` sean correctas para tu sistema.
+- `SUPABASE_URL`: URL de la base de datos Supabase
+- `SUPABASE_KEY`: Clave de API de Supabase
+- `SHEET_URL`: URL de la hoja de cálculo de Google
+- `CARPETA_ARCHIVOS`: Ruta para almacenar archivos descargados
+- `API_TOKEN_SAN_CRISTOBAL`: Token de API para San Cristóbal
+- `API_TOKEN_ST_CRISTOBAL`: Token de API para St. Cristóbal
+- `CREDENTIALS_PATH`: Ruta al archivo de credenciales de Google
+- `TOKEN_PATH`: Ruta al archivo de token de Google
 
-## Uso
+## Notas Importantes
 
-Para ejecutar todos los scrapers:
+- Los archivos de certificados y credenciales deben mantenerse seguros y no compartirse
+- El directorio `.venv` no debe incluirse en el control de versiones
+- Se recomienda mantener actualizado el archivo `requirements.txt`
 
-```bash
-python src/main.py
-```
+## Contribución
 
-Para ejecutar un scraper específico:
+1. Crear una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+2. Hacer commit de tus cambios (`git commit -m 'Añadir nueva funcionalidad'`)
+3. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+4. Abrir un Pull Request
 
-```bash
-python src/scrapers/santander.py
-python src/scrapers/estado.py
-python src/scrapers/bci.py
-```
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## Programación Automática
 
@@ -86,13 +124,6 @@ Los logs se guardan en la carpeta `logs/` con el nombre `scraping.log`. Cada eje
 - Hora de inicio y fin
 - Errores y advertencias
 - Resultados de las operaciones
-
-## Notas Importantes
-
-- Mantener las credenciales y tokens seguros
-- No compartir los archivos de certificados
-- Verificar periódicamente los logs para detectar errores
-- Mantener actualizadas las dependencias
 
 ## Soporte
 
