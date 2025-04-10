@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  facturador-lioren:
+    build: .
+    volumes:
+      - ./certificado:/app/certificado
+      - ./archivos:/app/archivos
+      - ./.env:/app/.env
+    command: python facturador_lioren.py
+    restart: unless-stopped
+
+  scrap-bci:
+    build: .
+    volumes:
+      - ./certificado:/app/certificado
+      - ./archivos:/app/archivos
+      - ./.env:/app/.env
+    command: python Scrap_bci.py
+    restart: unless-stopped
+
+  scrap-santander:
+    build: .
+    volumes:
+      - ./certificado:/app/certificado
+      - ./archivos:/app/archivos
+      - ./.env:/app/.env
+    command: python Scrap_santander.py
+    restart: unless-stopped
+
+  scrap-santander-cla:
+    build: .
+    volumes:
+      - ./certificado:/app/certificado
+      - ./archivos:/app/archivos
+      - ./.env:/app/.env
+    command: python Scrap_santander_cla.py
+    restart: unless-stopped
+
+  scrap-estado:
+    build: .
+    volumes:
+      - ./certificado:/app/certificado
+      - ./archivos:/app/archivos
+      - ./.env:/app/.env
+    command: python Scrap_estado.py
+    restart: unless-stopped 
