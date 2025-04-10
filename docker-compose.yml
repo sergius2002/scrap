@@ -10,12 +10,14 @@ services:
     command: python facturador_lioren.py
     restart: unless-stopped
 
-  scrap-bci:
+  scrap:
     build: .
     volumes:
-      - ./certificado:/app/certificado
       - ./archivos:/app/archivos
-      - ./.env:/app/.env
+      - ./certificado:/app/certificado
+      - ./logs:/app/logs
+    env_file:
+      - .env
     command: python Scrap_bci.py
     restart: unless-stopped
 

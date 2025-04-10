@@ -54,6 +54,46 @@ pip install -r requirements.txt
    - Copiar el archivo `.env.example` a `.env`
    - Actualizar las variables en `.env` con tus credenciales
 
+## Instalación con Docker
+
+1. Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
+
+2. Clonar el repositorio:
+```bash
+git clone https://github.com/sergius2002/scrap.git
+cd scrap
+```
+
+3. Configurar las variables de entorno:
+   - Copiar el archivo `.env.example` a `.env`
+   - Actualizar las variables en `.env` con tus credenciales
+
+4. Construir y ejecutar el contenedor:
+```bash
+# Construir la imagen
+docker-compose build
+
+# Ejecutar el contenedor
+docker-compose up
+```
+
+5. Para ejecutar un script específico:
+```bash
+# Scrap BCI
+docker-compose run scrap python Scrap_bci.py
+
+# Scrap Santander
+docker-compose run scrap python Scrap_santander.py
+
+# Scrap Santander CLA
+docker-compose run scrap python Scrap_santander_cla.py
+```
+
+6. Para ver los logs:
+```bash
+docker-compose logs -f
+```
+
 ## Estructura del Proyecto
 
 - `Scrap_bci.py`: Script para scraping de BCI
