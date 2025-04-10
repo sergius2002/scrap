@@ -72,4 +72,4 @@ LOGGING_CONFIG = {
             "propagate": True
         }
     }
-} 
+}

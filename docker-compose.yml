@@ -14,16 +14,16 @@ services:
       - PYTHONUNBUFFERED=1
 
   scrap:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./certificado:/app/certificado
-      - ./archivos:/app/archivos
-      - ./logs:/app/logs
-      - ./.env:/app/.env
-    command: python Scrap_bci.py
-    restart: "no"
+      - .:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
-      - PYTHONUNBUFFERED=1
+      - DISPLAY=${DISPLAY}
+    command: python supervisor.py
+    restart: unless-stopped
 
   scrap-santander:
     build: .
