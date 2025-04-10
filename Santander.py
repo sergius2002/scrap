@@ -458,46 +458,13 @@ def BASE_DE_DATOS(df_resultado, supabase_client):
         logger.info("No se agregaron registros nuevos a la base de datos.")
 
 # --------------------------------------------------------------------------------
-# FUNCIÓN PARA REINICIAR EL SCRIPT
+# Bloque principal de ejecución
 # --------------------------------------------------------------------------------
-def reiniciar_script():
-    """
-    Reinicia el script actual.
-    """
-    logger.info("Reiniciando el script...")
-    python = sys.executable
-    os.execv(python, [python] + sys.argv)
-
-# --------------------------------------------------------------------------------
-# FUNCIÓN PRINCIPAL
-# --------------------------------------------------------------------------------
-def buscar_nuevos_datos(intervalo_busqueda=300, intervalo_reinicio=3600):
-    """
-    Busca nuevos datos y actualiza la base de datos.
-    Ejecuta el proceso cada 'intervalo_busqueda' segundos.
-    Reinicia el script cada 'intervalo_reinicio' segundos.
-    """
-    logger.info("Función buscar_nuevos_datos() iniciada.")
-    tiempo_inicio = time.time()
-    while True:
-        logger.info("Iniciando búsqueda de nuevos datos...")
-        df_santander = SANTANDER()
-        BASE_DE_DATOS(df_santander, supabase)
-        tiempo_actual = time.time()
-        tiempo_transcurrido = tiempo_actual - tiempo_inicio
-        if tiempo_transcurrido >= intervalo_reinicio:
-            logger.info(f"Se ha alcanzado el intervalo de reinicio de {intervalo_reinicio} segundos.")
-            reiniciar_script()
-        logger.info(f"Esperando {intervalo_busqueda} segundos antes de la próxima búsqueda.")
-        time.sleep(intervalo_busqueda)
-
 if __name__ == "__main__":
-    logger.info("Iniciando el script con ejecución cada 300 segundos y reinicio cada 3600 segundos.")
     try:
-        intervalo_busqueda = 300  # Intervalo de búsqueda en segundos
-        intervalo_reinicio = 3600  # Intervalo de reinicio en segundos
-        buscar_nuevos_datos(intervalo_busqueda=intervalo_busqueda, intervalo_reinicio=intervalo_reinicio)
+        logger.info("Iniciando procesamiento de datos de Santander...")
+        SANTANDER()
+        logger.info("Procesamiento completado exitosamente.")
     except Exception as e:
-        logger.error(f"Error inesperado: {e}")
-        logger.info("Reiniciando el script debido a un error.")
-        reiniciar_script()
+        logger.error(f"Error durante la ejecución: {e}")
+        sys.exit(1)

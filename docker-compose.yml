@@ -1,25 +1,29 @@
 version: '3.8'
 
 services:
-  facturador-lioren:
+  facturador:
     build: .
     volumes:
       - ./certificado:/app/certificado
       - ./archivos:/app/archivos
+      - ./logs:/app/logs
       - ./.env:/app/.env
-    command: python facturador_lioren.py
+    command: python Facturador_lioren.py
     restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
 
   scrap:
     build: .
     volumes:
-      - ./archivos:/app/archivos
       - ./certificado:/app/certificado
+      - ./archivos:/app/archivos
       - ./logs:/app/logs
-    env_file:
-      - .env
+      - ./.env:/app/.env
     command: python Scrap_bci.py
-    restart: unless-stopped
+    restart: "no"
+    environment:
+      - PYTHONUNBUFFERED=1
 
   scrap-santander:
     build: .

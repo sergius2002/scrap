@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import os
 import hashlib
 import pandas as pd
@@ -5,6 +8,7 @@ import time
 from datetime import datetime
 from supabase import create_client, Client
 from dotenv import load_dotenv
+import sys
 
 load_dotenv()
 
@@ -234,25 +238,16 @@ def process_and_store_excel(file_path):
 
     print(f"[{datetime.now()}] Archivo '{file_path}' procesado e insertado en 'transferencias'.")
 
-def main_loop(file_path, interval_seconds=300):
-    """
-    Ejecuta el procesamiento del archivo cada 'interval_seconds' segundos.
-    """
-    while True:
-        print(f"[{datetime.now()}] Iniciando procesamiento del archivo.")
-        process_and_store_excel(file_path)
-        print(f"[{datetime.now()}] Procesamiento completado. Esperando {interval_seconds} segundos para la siguiente ejecución.")
-        time.sleep(interval_seconds)
-
 if __name__ == "__main__":
-    # Obtener el directorio actual del script
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    # Ruta al archivo Excel usando ruta relativa
-    ruta_excel = os.path.join(current_dir, "Bancos", "excel_detallado.xlsx")
-
     try:
-        main_loop(ruta_excel, interval_seconds=300)
-    except KeyboardInterrupt:
-        print("\n[INFO] Ejecución interrumpida por el usuario. Saliendo del script.")
+        # Obtener el directorio actual del script
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        # Ruta al archivo Excel usando ruta relativa
+        excel_file_path = os.path.join(current_dir, "Bancos", "excel_detallado.xlsx")
+        
+        print(f"[{datetime.now()}] Iniciando procesamiento de datos de BCI...")
+        process_and_store_excel(excel_file_path)
+        print(f"[{datetime.now()}] Procesamiento completado exitosamente.")
     except Exception as e:
-        print(f"[ERROR] Ocurrió un error inesperado en el bucle principal: {e}")
+        print(f"[{datetime.now()}] Error durante la ejecución: {e}")
+        sys.exit(1)
